@@ -1,2 +1,4 @@
+.env
+
 db/data/*
 !db/data/.gitkeep
