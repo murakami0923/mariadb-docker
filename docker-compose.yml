@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  mariadb:
+    image: mariadb:11.3.8-noble
+    container_name: db
+    restart: unless-stopped
+    environment:
+      # 必要に応じて変更してください
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: appdb
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: password
+      TZ: Asia/Tokyo
+    ports:
+      - "3306:3306"
+    volumes:
+      # ← ホストの db/my.cnf をコンテナ内 /etc/mysql/conf.d/my.cnf として参照（読み取り専用）
+      - ./db/my.cnf:/etc/mysql/conf.d/my.cnf:ro
+      # ← ホストの db/data を MariaDB のデータディレクトリへ
+      - ./db/data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-prootpass"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
