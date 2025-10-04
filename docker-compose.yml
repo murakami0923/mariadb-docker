@@ -17,3 +17,5 @@ services:
       - ./db/my.cnf:/etc/mysql/conf.d/my.cnf:ro
       # ← ホストの db/data を MariaDB のデータディレクトリへ
       - ./db/data:/var/lib/mysql
+      # ← メンテナンス用ディレクトリ
+      - ./db/maintenance:/root/maintenance
